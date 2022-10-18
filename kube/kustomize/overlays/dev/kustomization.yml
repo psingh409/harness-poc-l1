@@ -1,0 +1,16 @@
+bases:
+  - ../../base/
+
+resources:
+  - ingress.yml
+
+#images:
+#  - name: app-image
+#    newName: ${containerImageUri}
+#
+#namespace: bootstrap
+
+configMapGenerator:
+  - name: app-runtime
+    literals:
+      - SPRING_PROFILES_ACTIVE=dev

@@ -1,0 +1,11 @@
+bases:
+  - ../../base/
+
+resources:
+  - ingress.yml
+
+
+configMapGenerator:
+  - name: app-runtime
+    literals:
+      - SPRING_PROFILES_ACTIVE=test

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: i046364-eks-hello
+spec:
+  selector:
+    matchLabels:
+      app: i046364-eks-hello
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: i046364-eks-hello
+          image: containerregistry-na.jpmchase.net/container-release/awmaernd/bootstrap/i046364-eks-hello@sha256:2e2e45ee35b7a9160529cce3878aff0b556ca07a94d9d47f9cd4ad739a6b8b6e
+          env:
+            - name: INFO_KUBE_ENV
+              value: <+pipeline.stages.DeployDEV.spec.infrastructure.infrastructureDefinition.spec.output.environment.name>
+            - name: INFO_KUBE_CLUSTER
+              value: <+pipeline.stages.Build.spec.infrastructure.spec.namespace>
+            - name: INFO_KUBE_IMAGE
+              value: containerregistry-na.jpmchase.net/container-release/awmaernd/bootstrap/i046364-eks-hello@sha256:2e2e45ee35b7a9160529cce3878aff0b556ca07a94d9d47f9cd4ad739a6b8b6e

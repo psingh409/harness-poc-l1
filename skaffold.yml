@@ -1,0 +1,23 @@
+apiVersion: skaffold/v1
+kind: Config
+build:
+  artifacts:
+    - image: containerregistry-na.jpmchase.net/container-sandbox/awmaernd/bootstrap/i046364-eks-hello
+      kaniko:
+        buildContext:
+          localDir: {}
+  tagPolicy:
+    sha256: {}
+  cluster:
+    namespace: 110252-skaffoldkaniko-dev
+profiles:
+  - name: local
+    patches:
+      - op: add
+        path: /build/cluster/dockerConfig
+        value: {secretName: "kaniko-secret"}
+  - name: jules-sandbox
+  - name: jules-release
+    build:
+      artifacts:
+        - image: containerregistry-na.jpmchase.net/container-release/awmaernd/bootstrap/i046364-eks-hello

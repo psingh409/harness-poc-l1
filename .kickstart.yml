@@ -1,0 +1,20 @@
+---
+starter:
+  name: "monetaBoot"
+  version: "2.3.5"
+  inputs:
+  - name: "projectName"
+    value: "i046364-eks-hello"
+  - name: "language"
+    value: "kotlin"
+  - name: "groupId"
+    value: "com.jpmorgan.sample"
+  - name: "deployment"
+    value: "eks"
+  - name: "springBootStarters"
+    value: "actuator"
+  - name: "springBootStarters"
+    value: "web"
+  - name: "springBootStarters"
+    value: "test"
+generated: "2022.08.01-20.09.28"

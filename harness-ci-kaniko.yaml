@@ -1,0 +1,169 @@
+---
+# Create namespace for all harness activities. Delegate is installed here.
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: harness
+  labels:
+    app.kubernetes.io/part-of: "harness"
+    app.kubernetes.io/name: "harness-ci"
+    app.kubernetes.io/instance: "harness-ci-image-creation"
+    app.kubernetes.io/managed-by: "Helm"
+    # prevent any user workloads from running in this namespace
+    core.eks.jpmc/namespace: "true"
+    
+---
+# Service account used by harness for image creation
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kaniko-sa
+  namespace: harness
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: kaniko-psp
+spec:
+  # prevents container from manipulating the network stack, accessing devices on the host and prevents ability to run DinD
+  privileged: false
+  fsGroup:
+    rule: 'RunAsAny'
+  runAsUser:
+    rule: 'RunAsAny'
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  # Allow core volume types. But more specifically, don't allow mounting host volumes to include the Docker socket - '/var/run/docker.sock'
+  volumes:
+  - 'emptyDir'
+  - 'secret'
+  - 'downwardAPI'
+  - 'configMap'
+  # persistentVolumes are required for CJOC and Managed Master StatefulSets
+  - 'persistentVolumeClaim'
+  - 'projected'
+  hostPID: false
+  hostIPC: false
+  hostNetwork: false
+  # Ensures that no child process of a container can gain more privileges than its parent
+  allowPrivilegeEscalation: false
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: kaniko-psp-role
+  namespace: harness
+  labels:
+    app.kubernetes.io/part-of: "harness"
+    app.kubernetes.io/name: "harness-ci"
+    app.kubernetes.io/instance: "harness-ci-image-creation"
+    app.kubernetes.io/managed-by: "Helm"
+rules:
+- apiGroups: ['extensions']
+  resources: ['podsecuritypolicies']
+  verbs:     ['use']
+  resourceNames:
+  - kaniko-psp
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: harness-role
+  namespace: harness
+  labels:
+    app.kubernetes.io/part-of: "harness"
+    app.kubernetes.io/name: "harness-ci"
+    app.kubernetes.io/instance: "harness-ci-image-creation"
+    app.kubernetes.io/managed-by: "Helm"
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/log
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kaniko-psp-role-binding
+  namespace: julescloud-kaniko-agents
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: harness-psp-role
+subjects:
+- kind: ServiceAccount
+  name: kaniko-sa
+  namespace: harness
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: kaniko-role-binding
+  namespace: julescloud-kaniko-agents
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: harness-role
+subjects:
+- kind: ServiceAccount
+  name: kaniko-sa
+  namespace: harness
+---
+# lock the ns so that only harness can run in that ns and no end user workloads can run.
+# based on our research, having the label below locks user workloads from running on this namespace. This will need to be validated after deployment.
+# core.eks.jpmc/namespace: "true"
+
+# prevent users from getting this SA token
+# based on our research, if the ns is a core jpmc ns, there might be policies in place to prevent viewing the SA token. This will need to be validated after deployment.
+
+# manifest file to deploy the delegate to this namespace
+# this will be needed when we are rolling out harness as part of the platform.
+# we will not make this change now as part of the PoC because we will not have permissions to evolve/change the delegate installation and will need SRE for any Delegate changes.
+# In PoC the current Delegate installed will be configured to run CI image creation in the above created NS.

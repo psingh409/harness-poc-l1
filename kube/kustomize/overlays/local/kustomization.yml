@@ -1,0 +1,16 @@
+bases:
+  - ../../base/
+
+resources:
+  - ingress.yml
+
+images:
+  - name: app-image
+    newName: containerregistry-na.jpmchase.net/container-sandbox/awmaernd/bootstrap/i046364-eks-hello:latest
+
+namespace: bootstrap
+
+configMapGenerator:
+  - name: app-runtime
+    literals:
+      - SPRING_PROFILES_ACTIVE=local

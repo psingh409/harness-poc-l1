@@ -1,0 +1,54 @@
+sealId: 1110252
+node: java-11 && maven-3 
+baseVersion: 1.0.0
+container:
+  buildType: skaffold
+  skaffold:
+    skaffoldYaml: ./skaffold.yml
+    targetRegistry: containerregistry-na.jpmchase.net
+    klogin:
+      domainSuffix: '@ad.jpmorganchase.com'
+      endpoint: https://api.mt-d2.belv.gkp.jpmchase.net:6443
+imageScan:
+  domainPrefix: AD\
+kubernetes:
+  deploymentType: k8s
+mapping:
+  - name: develop
+    container:
+      skaffold:
+        profile: jules-sandbox
+    k8sDeployment:
+      - environment: dev
+        namespace: default
+        kustomize:
+          - location: kube/kustomize/overlays/dev
+        eks:
+          domain: AD
+          account: REPLACE_ME
+          role: REPLACE_ME-application-engineer
+          region: us-east-1
+          clusterName: REPLACE_ME
+          copySourceImageToEcr: false
+        config:
+          cluster: REPLACE_ME
+          cluster-host: i046364-eks-hello.REPLACE_ME.REPLACE_ME.dev.aws.jpmchase.net
+  - name: master
+    container:
+      skaffold:
+        profile: jules-release
+    k8sDeployment:
+      - environment: dev
+        namespace: <+infra.namespace>
+        kustomize:
+          - location: kube/kustomize/overlays/devs
+        eks:
+          domain: NAEAST
+          account: REPLACE_ME
+          role: 108187-core-engineer
+          region: us-east-1
+          clusterName: s110252-d111219-2
+          copySourceImageToEcr: false
+        config:
+          cluster: s110252-d111219-2
+          cluster-host: bootstrap-kickstart-6x.optz.awmae.dev.aws.jpmchase.net
