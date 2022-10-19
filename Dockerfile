@@ -1,11 +1,7 @@
 # Use Managed Base Image Oracle JDK 11
-FROM containerregistry-na.jpmchase.net/container-base/managedbaseimages/oracle-jdk:11-stable
+FROM openjdk:8-jre-alpine3.9
 
-# URL to get source code for building the image (string)
-LABEL org.opencontainers.image.source="https://${REPO_HOSTNAME}/projects/${PROJECT}/repos/${REPO}/browse?at=${COMMIT_HASH}"
 
-# Source control revision identifier for the packaged software. Hash of the commit for this
-LABEL org.opencontainers.image.revision="${COMMIT_HASH}"
 
 # Human-readable title of the image (string)
 LABEL org.opencontainers.image.title=" i046364-eks-hello"
