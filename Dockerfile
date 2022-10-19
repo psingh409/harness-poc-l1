@@ -12,14 +12,14 @@ ARG gavVersion=0.0.0-SNAPSHOT
 # Override the version from environment, if present (helpful with CI tools)
 ENV gavVersion ${gavVersion}
 
-# Copy application to container's /app folder
-COPY target/i046364-eks-hello-${gavVersion}.jar /app/
 
-# Expand the jar contents to /app/ directory then delete the jar
-RUN cd /app/ && jar -xvf /app/i046364-eks-hello-${gavVersion}.jar && rm /app/i046364-eks-hello-${gavVersion}.jar
+# Copy the already build jar to the image
+COPY target/i046364-eks-hello-${gavVersion}.jar /bin/
 
-# Change ownership to 'jpmcnobody' user aka account with least permissions
-RUN chown -R jpmcnobody:jpmcnobody /app/
-USER 99
-# Command to run Spring Boot Application using JarLauncher
-CMD java $JAVA_OPTS -cp /app/ org.springframework.boot.loader.JarLauncher
+# Expose default port for external communication
+EXPOSE 8888
+
+# Command to run the executable
+ENTRYPOINT [ "java" ,"-jar",  "/bin/i046364-eks-hello-0.0.0-SNAPSHOT.jar" ]
+
+
