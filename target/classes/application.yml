@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: i046364-eks-hello
+  h2:
+    console:
+      enabled: true
+  web:
+    resources:
+      cache:
+        period: 60m
+application:
+  seal:
+    id:
+
+
+
+management:
+  info:
+    env:
+      enabled: true
+
