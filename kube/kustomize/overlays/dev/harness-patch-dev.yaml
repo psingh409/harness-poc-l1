@@ -11,11 +11,11 @@ spec:
     spec:
       containers:
         - name: i046364-eks-hello
-          image: <+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_Image"].stepArtifacts.publishedImageArtifacts[0].imageName>:<+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_Image"].stepArtifacts.publishedImageArtifacts[0].tag>
+          image: <+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_to_DockerHub"].stepArtifacts.publishedImageArtifacts[0].imageName>:<+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_to_DockerHub"].stepArtifacts.publishedImageArtifacts[0].tag>
           env:
             - name: INFO_KUBE_ENV
               value: <+pipeline.stages.DeployDEV.spec.infrastructure.infrastructureDefinition.spec.output.environment.name>
             - name: INFO_KUBE_CLUSTER
               value: <+pipeline.stages.Build.spec.infrastructure.spec.namespace>
             - name: INFO_KUBE_IMAGE
-              value: <+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_Image"].stepArtifacts.publishedImageArtifacts[0].imageName>:<+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_Image"].stepArtifacts.publishedImageArtifacts[0].tag>
+              value: <+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_to_DockerHub"].stepArtifacts.publishedImageArtifacts[0].imageName>:<+pipeline.stages.Build.spec.execution.steps.Build_and_Push_Image["artifact-Build_and_Push_to_DockerHub"].stepArtifacts.publishedImageArtifacts[0].tag>
