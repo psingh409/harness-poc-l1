@@ -18,8 +18,10 @@ COPY target/i046364-eks-hello-${gavVersion}.jar /bin/
 
 # Expose default port for external communication
 EXPOSE 8888
-
+RUN chown -R 999:999 /bin/
+USER 99
 # Command to run the executable
-ENTRYPOINT [ "java" ,"-jar",  "/bin/i046364-eks-hello-0.0.0-SNAPSHOT.jar" ]
+#ENTRYPOINT [ "java" ,"-jar",  "/bin/i046364-eks-hello-0.0.0-SNAPSHOT.jar" ]
+CMD java $JAVA_OPTS -cp /bin/ org.springframework.boot.loader.JarLauncher
 
 
