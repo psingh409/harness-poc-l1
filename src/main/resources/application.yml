@@ -1,21 +1,43 @@
 spring:
-  application:
-    name: i046364-eks-hello
   h2:
     console:
       enabled: true
+  # Hibernate Settings
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  # Liquibase settings
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog.yml
   web:
     resources:
       cache:
         period: 60m
 application:
   seal:
-    id:
+    id:110252
+# Info Details
+info:
+  chuckNorrisDateOfBirth: 03/10/1940
 
+# Logging Settings
+logging:
+  level:
+    root: INFO
 
 
 management:
-  info:
-    env:
-      enabled: true
-
+  endpoints:
+    web:
+      exposure:
+        # Only enable specific Spring Boot Actuator Endpoints
+        include: actuator,info,health,metrics
+  endpoint:
+    health:
+      # Turn on details for Spring Boot Health Actuator
+      show-details: always
+  health:
+    diskspace:
+      # Disable Spring Boot Health Actuator Diskspace Indicator
+      enabled: false

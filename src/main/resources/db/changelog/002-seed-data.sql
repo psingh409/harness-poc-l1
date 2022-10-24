@@ -1,0 +1,10 @@
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris does not sleep; he waits.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris doesn''t dial the wrong number. You answered the wrong phone.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris doesn''t wear a watch. HE decides what time it is.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris CAN believe it''s not butter.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris doesn''t read books. He stares them down until he gets the information he wants.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris can touch MC Hammer.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris got out of checkmate.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris can kill two stones with one bird.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Chuck Norris can speak French... In Russian.');
+insert into chuck_norris_fact (id, fact) values (nextval('hibernate_sequence'), 'Death once had a near-Chuck-Norris experience.');

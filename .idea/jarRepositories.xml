@@ -17,6 +17,11 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="artifacts-external" />
+      <option name="name" value="artifacts-external" />
+      <option name="url" value="https://artifacts-read.gkp.jpmchase.net/artifactory/maven" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
