@@ -17,7 +17,7 @@ ENV gavVersion ${gavVersion}
 COPY target/i046364-eks-hello-${gavVersion}.jar /bin/
 
 # Expose default port for external communication
-EXPOSE 8080
+EXPOSE 8443
 
 # Command to run the executable
 ENTRYPOINT [ "java" ,"-jar",  "/bin/i046364-eks-hello-0.0.0-SNAPSHOT.jar" ]
