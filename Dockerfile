@@ -6,6 +6,8 @@ FROM openjdk:8-jre-alpine3.9
 # Human-readable title of the image (string)
 LABEL org.opencontainers.image.title=" i046364-eks-hello"
 
+LABEL cicd.pipeline.execution.url = <+pipeline.execution.url>
+
 # Default the target version to 0.0.0-SNAPSHOT
 ARG gavVersion=0.0.0-SNAPSHOT
 
