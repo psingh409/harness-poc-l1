@@ -63,17 +63,17 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-          readinessProbe:
-            httpGet:
-              path: /actuator/keepalive
-              port: 8080
-            timeoutSeconds: 5
-            initialDelaySeconds: 15
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /actuator/keepalive
-              port: 8080
-            timeoutSeconds: 5
-            initialDelaySeconds: 15
-            periodSeconds: 10
+#          readinessProbe:
+#            httpGet:
+#              path: /actuator/keepalive
+#              port: 8080
+#            timeoutSeconds: 5
+#            initialDelaySeconds: 15
+#            periodSeconds: 10
+#          livenessProbe:
+#            httpGet:
+#              path: /actuator/keepalive
+#              port: 8080
+#            timeoutSeconds: 5
+#            initialDelaySeconds: 15
+#            periodSeconds: 10
