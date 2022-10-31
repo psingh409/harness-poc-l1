@@ -1,1 +1,1 @@
-# harness-poc-l1 - Changed to trigger the build -  Demo
+# harness-poc-l1 - Changed to trigger the build -  Weekly Demo
