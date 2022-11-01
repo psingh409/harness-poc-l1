@@ -1,7 +1,7 @@
 # Use Managed Base Image Oracle JDK 11
 FROM openjdk:8-jre-alpine3.9
 
-
+ARG HARNESS_URL
 
 # Human-readable title of the image (string)
 LABEL org.opencontainers.image.title=" i046364-eks-hello"
