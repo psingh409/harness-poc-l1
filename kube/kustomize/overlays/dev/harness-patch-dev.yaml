@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: i046364-eks-hello
-  replicas: 2
+  replicas: <+pipeline.stages.Deploy_to_Dev.variables.replicas>
   template:
     spec:
       containers:
